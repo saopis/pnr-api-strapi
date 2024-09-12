@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hos_directors",
+  "info": {
+    "singularName": "hos-director",
+    "pluralName": "hos-directors",
+    "displayName": "hos_director",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "string"
+    }
+  }
+}
