@@ -13,11 +13,13 @@ import i18N from "@strapi/plugin-i18n/strapi-admin";
 import seo from "@strapi/plugin-seo/strapi-admin";
 import usersPermissions from "@strapi/plugin-users-permissions/strapi-admin";
 import strapiAdvancedUuid from "strapi-advanced-uuid/strapi-admin";
-import fieldUuid from "strapi-auto-uuid/strapi-admin";
 import contentTypeExplorer from "strapi-content-type-explorer/strapi-admin";
+import strapiPhoneValidator from "strapi-phone-validator/strapi-admin";
 import comments from "strapi-plugin-comments/strapi-admin";
 import duplicateButton from "strapi-plugin-duplicate-button/strapi-admin";
+import importExportEntries from "strapi-plugin-import-export-entries/strapi-admin";
 import menus from "strapi-plugin-menus/strapi-admin";
+import softDelete from "strapi-plugin-soft-delete/strapi-admin";
 import { renderAdmin } from "@strapi/strapi/admin";
 
 renderAdmin(document.getElementById("strapi"), {
@@ -33,10 +35,12 @@ renderAdmin(document.getElementById("strapi"), {
     seo: seo,
     "users-permissions": usersPermissions,
     "strapi-advanced-uuid": strapiAdvancedUuid,
-    "field-uuid": fieldUuid,
     "content-type-explorer": contentTypeExplorer,
+    "strapi-phone-validator": strapiPhoneValidator,
     comments: comments,
     "duplicate-button": duplicateButton,
+    "import-export-entries": importExportEntries,
     menus: menus,
+    "soft-delete": softDelete,
   },
 });

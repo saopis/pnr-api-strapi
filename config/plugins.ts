@@ -1,7 +1,7 @@
-module.exports=({env})=>({
+module.exports = ({ env }) => ({
   i18n: true,
-  ckeditor:{
-    enabled:true,
+  ckeditor: {
+    enabled: true,
     resolve: "./src/plugins/strapi-plugin-ckeditor"
   },
   "content-versioning": {
@@ -26,5 +26,19 @@ module.exports=({env})=>({
   'drag-drop-content-types': {
     enabled: true
   },
-
+  "soft-delete": {
+    enabled: true,
+  },
+  'import-export-entries': {
+    enabled: true,
+    config: {
+      /**
+       * Public hostname of the server.
+       *
+       * If you use the local provider to persist medias,
+       * `serverPublicHostname` should be set to properly export media urls.
+       */
+      serverPublicHostname: env('PUBLIC_HOSTNAME', `http://localhost:${env.int('PORT', 1337)}`), // default: "".
+    },
+  },
 })

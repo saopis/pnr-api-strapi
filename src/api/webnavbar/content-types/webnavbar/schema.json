@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "webnavbars",
+  "info": {
+    "singularName": "webnavbar",
+    "pluralName": "webnavbars",
+    "displayName": "webnavbar",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "menu": {
+      "type": "json"
+    },
+    "text": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "web_logs",
+  "info": {
+    "singularName": "web-log",
+    "pluralName": "web-logs",
+    "displayName": "web_log",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "_softDeletedAt": {
+      "type": "datetime",
+      "configurable": false,
+      "writable": false,
+      "visible": false,
+      "private": true
+    },
+    "_softDeletedById": {
+      "type": "integer",
+      "configurable": false,
+      "writable": false,
+      "visible": false,
+      "private": true
+    },
+    "_softDeletedByType": {
+      "type": "string",
+      "configurable": false,
+      "writable": false,
+      "visible": false,
+      "private": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "detail": {
+      "type": "richtext"
+    },
+    "rich_text": {
+      "type": "blocks"
+    },
+    "uuid": {
+      "type": "uid"
+    }
+  }
+}
