@@ -22,11 +22,11 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-18T03:31:30.195Z"
+    "x-generation-date": "2024-09-18T09:55:49.790Z"
   },
   "servers": [
     {
-      "url": "http://localhost:5001/api",
+      "url": "http://localhost:5002/api",
       "description": "Development server"
     }
   ],
@@ -4288,10 +4288,6 @@
           "data": {
             "type": "object",
             "properties": {
-              "menu": {},
-              "text": {
-                "type": "string"
-              },
               "_softDeletedAt": {
                 "type": "string",
                 "format": "date-time"
@@ -4301,7 +4297,8 @@
               },
               "_softDeletedByType": {
                 "type": "string"
-              }
+              },
+              "menu": {}
             }
           }
         }
@@ -4355,19 +4352,22 @@
       "Webnavbar": {
         "type": "object",
         "properties": {
-          "menu": {},
-          "text": {
+          "_softDeletedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "_softDeletedById": {
+            "type": "integer"
+          },
+          "_softDeletedByType": {
             "type": "string"
           },
+          "menu": {},
           "createdAt": {
             "type": "string",
             "format": "date-time"
           },
           "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "publishedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -4656,16 +4656,6 @@
                 }
               }
             }
-          },
-          "_softDeletedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "_softDeletedById": {
-            "type": "integer"
-          },
-          "_softDeletedByType": {
-            "type": "string"
           }
         }
       },

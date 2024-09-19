@@ -1,0 +1,55 @@
+# ใช้ Node.js image เป็น base
+FROM node:18-alpine
+
+# เซ็ต timezone เป็น Asia/Bangkok (สามารถเปลี่ยนเป็น timezone อื่นได้ตามต้องการ)
+ENV TZ Asia/Bangkok
+
+# ติดตั้ง tzdata package และเซ็ต timezone
+RUN apk add --no-cache tzdata && \
+  cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+  echo $TZ > /etc/timezone && \
+  apk del tzdata
+
+# กำหนด Working Directory
+WORKDIR /usr/src/app
+
+# คัดลอกไฟล์ Yarn และ dependencies
+COPY package.json yarn.lock ./
+
+# ติดตั้ง dependencies ด้วย Yarn
+RUN yarn install
+
+# # ติดตั้ง dependencies ด้วย Yarn
+# RUN yarn install --production
+
+# คัดลอกโค้ดโปรเจกต์ไปยัง container
+COPY . .
+
+# ใช้ ARG เพื่อรับค่า NODE_ENV
+ARG NODE_ENV=production
+
+# ตั้งค่า ENV จาก ARG
+ENV NODE_ENV=${NODE_ENV}
+
+
+# ติดตั้ง nodemon สำหรับใช้ในโหมดพัฒนา
+# RUN yarn global add nodemon
+
+# คอมไพล์ TypeScript เป็น JavaScript (สำหรับ production)
+# RUN yarn build
+# Build เฉพาะในโหมด production
+RUN if [ "$NODE_ENV" = "production" ]; then yarn build; fi
+
+# เปิดพอร์ตที่ต้องการ (ค่าเริ่มต้นคือ 3000)
+# EXPOSE 5001
+
+# ARG PORT=1337
+# ENV PORT=${PORT}
+# EXPOSE ${PORT}
+
+# ใช้ CMD ที่แตกต่างกันตาม NODE_ENV
+CMD if [ "$NODE_ENV" = "production" ]; then \
+  yarn start; \
+  else \
+  yarn develop; \
+  fi

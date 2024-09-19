@@ -1,0 +1,70 @@
+version: "3.9"
+services:
+  strapi:
+    container_name: strapi
+    build: .
+    image: strapi:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: strapi-db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      PUBLIC_HOSTNAME: ${PUBLIC_HOSTNAME}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: ${NODE_ENV}
+      # PORT: ${PORT}
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./yarn.lock:/opt/yarn.lock
+      - ./.env:/opt/app/.env
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - "${PORT}:${PORT}"
+    networks:
+      - strapi
+    depends_on:
+      - strapi-db
+
+  strapi-db:
+    container_name: strapi-db
+    # image: postgres:14
+    build:
+      context: ./docker-db
+      dockerfile: Dockerfile
+    # platform: linux/amd64 #for platform error on Apple M1 chips
+    # restart: always
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - ./docker-db/strapi-data:/var/lib/postgresql/data
+      - ./docker-db/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./docker-db/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      # - strapi-data:/var/lib/postgresql/data/ #using a volume
+      # - ./postgresql.conf:/etc/postgresql/postgresql.conf
+      # - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+    ports:
+      - "${DATABASE_PORT}:5432"
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
+    networks:
+      - strapi
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: Strapi
+    driver: bridge

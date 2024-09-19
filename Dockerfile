@@ -1,0 +1,35 @@
+FROM node:18-alpine3.18
+# Installing libvips-dev for sharp Compatibility
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+
+ENV TZ Asia/Bangkok
+
+# ติดตั้ง tzdata package และเซ็ต timezone
+RUN apk add --no-cache tzdata && \
+  cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+  echo $TZ > /etc/timezone && \
+  apk del tzdata
+
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /opt/
+COPY package.json yarn.lock ./
+RUN yarn global add node-gyp
+RUN yarn config set network-timeout 600000 -g && yarn install
+ENV PATH /opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY . .
+RUN chown -R node:node /opt/app
+USER node
+# RUN ["yarn", "build"]
+RUN if [ "$NODE_ENV" = "production" ]; then yarn build; fi
+
+# EXPOSE 1337
+CMD if [ "$NODE_ENV" = "production" ]; then \
+  yarn start; \
+  else \
+  yarn develop; \
+  fi
+# CMD ["yarn", "develop"]
