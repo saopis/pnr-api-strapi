@@ -9,6 +9,8 @@ RUN apk add --no-cache tzdata && \
   cp /usr/share/zoneinfo/$TZ /etc/localtime && \
   echo $TZ > /etc/timezone && \
   apk del tzdata
+  
+COPY . .
 
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
@@ -20,7 +22,6 @@ RUN yarn config set network-timeout 600000 -g && yarn install
 ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
-COPY . .
 # RUN chown -R node:node /opt/app
 # USER node
 RUN yarn install
