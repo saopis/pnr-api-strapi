@@ -21,8 +21,9 @@ ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
-RUN chown -R node:node /opt/app
-USER node
+# RUN chown -R node:node /opt/app
+# USER node
+RUN yarn install
 # RUN ["yarn", "build"]
 RUN if [ "$NODE_ENV" = "production" ]; then yarn build; fi
 

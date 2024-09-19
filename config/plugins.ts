@@ -29,10 +29,10 @@ module.exports = ({ env }) => ({
   "soft-delete": {
     enabled: true,
   },
-  "strapi-content-type-explorer": {
-    enabled: true,
-    resolve: "./src/plugins/strapi-content-type-explorer",
-  },
+  // "strapi-content-type-explorer": {
+  //   enabled: true,
+  //   resolve: "./src/plugins/strapi-content-type-explorer",
+  // },
   'import-export-entries': {
     enabled: true,
     config: {
